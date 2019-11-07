@@ -1,0 +1,64 @@
+<html ng-app="app.user">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+    <script src="app/app.js"></script>
+    <script src="app/services/svUsers.js"></script>
+</head>
+<body ng-controller="userController">
+    <div class="container">
+        <h2 class="text-center" style="color:blue; font-weight:700">LIST USERS</h2>
+        <div id="user-form" class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                <form>  
+                    <input type="text" ng-model="formData.name" class=" text-center" placeholder="Input name">
+                    <input type="text" ng-model="formData.username" class="text-center" placeholder="Input username">    
+                    <input type="password" ng-model="formData.password" class="text-center" placeholder="Input password">        
+                    <button type="submit" class="btn btn-success"
+                        ng-disabled="!formData.name||!formData.username||!formData.password" ng-click="createUser()">Add
+                        user</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="edit-form" class="row" ng-hide="!isEdit">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                <form>
+                    <input type="text" ng-model="editForm.username" class=" text-center" value="editForm.username">
+                    <input type="text" ng-model="editForm.name" class="text-center" value="editForm.name">    
+                    <button type="submit" class="btn btn-primary"
+                        ng-disabled="!editForm.name||!editForm.username" ng-click="updateUser()">Save</button>
+                    <button type="button" class="btn btn-default" ng-click="CancelEdit()">Cancel</button>
+                </form>
+            </div>
+        </div>
+
+        <table class="table table-hover text-center">
+            <thead>
+                <tr>
+                    <th class="text-center">username</th>
+                    <th class="text-center">name</th>
+                    <th class="text-center">Edit</th>
+                    <th class="text-center">Delete</th>
+                </tr>
+            </thead>
+            <tbody ng-repeat="user in users">
+                <tr class="text-center">
+                    <td class="text-center">{{user.username}}</td>
+                    <td class="text-center">{{user.name}}</td>
+                    <td class="text-center"><button class="btn btn-warning" ng-click="editUser(user)">Edit</button></td>
+                    <td class="text-center"><button class="btn btn-danger" ng-click="deleteUser(user)">Delete</button></td>
+                </tr>
+            </tbody>
+            <p class="text-center" ng-show="loading">
+                <span class="fa fa-spinner fa-spin fa-3x"></span>
+            </p>
+        </table>
+    </div>
+</body>
+</html>
